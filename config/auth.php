@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'admin' => [
+            'driver' => 'session', // Menggunakan session untuk otentikasi
+            'provider' => 'admins', // Provider untuk data admin
+        ],
     ],
 
     /*
@@ -63,6 +67,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+        'admins' => [
+            'driver' => 'eloquent', // Menggunakan model Eloquent
+            'model' => App\Models\Admin::class, // Model yang digunakan
         ],
 
         // 'users' => [
