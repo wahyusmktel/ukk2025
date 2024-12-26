@@ -111,4 +111,25 @@ class AdminBukuController extends Controller
         // Redirect kembali ke halaman index
         return redirect()->route('admin.buku.index');
     }
+
+    public function destroy($id)
+    {
+        // Temukan data berdasarkan ID
+        $buku = BukuModel::findOrFail($id);
+
+        // Hapus cover jika ada
+        if ($buku->cover && file_exists(storage_path('app/public/' . $buku->cover))) {
+            unlink(storage_path('app/public/' . $buku->cover));
+        }
+
+        // Hapus data
+        $buku->delete();
+
+        // Tampilkan notifikasi sukses
+        Alert::success('Berhasil', 'Buku berhasil dihapus.');
+
+        // Redirect kembali ke halaman index
+        return redirect()->route('admin.buku.index');
+    }
+
 }

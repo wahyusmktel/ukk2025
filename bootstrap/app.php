@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\AdminMiddleware; //Panggil middleware disini
+use App\Http\Middleware\AuthenticateUser; //Panggil middleware disini
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -16,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
        
         $middleware->alias([
             'admin' => AdminMiddleware::class, // Daftarkan middleware admin
+            'auth:user' => AuthenticateUser::class, // Daftarkan middleware admin
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

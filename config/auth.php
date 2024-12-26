@@ -44,6 +44,10 @@ return [
             'driver' => 'session', // Menggunakan session untuk otentikasi
             'provider' => 'admins', // Provider untuk data admin
         ],
+        'user' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
     ],
 
     /*

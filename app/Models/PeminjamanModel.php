@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class BukuModel extends Model
+class PeminjamanModel extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -16,7 +16,7 @@ class BukuModel extends Model
      *
      * @var string
      */
-    protected $table = 'buku';
+    protected $table = 'peminjaman';
 
     /**
      * Kunci utama tipe string.
@@ -39,26 +39,14 @@ class BukuModel extends Model
      */
     protected $fillable = [
         'id',
-        'kategori_id',
-        'judul',
-        'penulis',
-        'penerbit',
-        'cover',
-        'tahun_terbit',
+        'buku_id',
+        'TanggalPeminjaman',
+        'TanggalPengembalian',
+        'StatusPeminjaman',
         'status',
         'created_by',
         'updated_by',
         'deleted_by',
-    ];
-
-    /**
-     * Daftar kolom yang harus di-cast ke tipe data tertentu.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'status' => 'boolean',
-        'tahun_terbit' => 'integer',
     ];
 
     /**
@@ -74,21 +62,15 @@ class BukuModel extends Model
                 $model->id = Str::uuid()->toString();
             }
         });
-
-        // Event sebelum data dihapus (soft delete)
-        static::deleting(function ($model) {
-            $model->deleted_by = auth()->guard('admin')->user()->id ?? null;
-            $model->saveQuietly(); // Simpan tanpa memicu event lagi
-        });
     }
 
     /**
-     * Relasi ke model KategoriBukuModel.
+     * Relasi ke model BukuModel.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function kategori()
+    public function buku()
     {
-        return $this->belongsTo(KategoriBukuModel::class, 'kategori_id');
+        return $this->belongsTo(BukuModel::class, 'buku_id');
     }
 }
